@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53e74e48-cd4b-4847-8427-e84e59344abe" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/Login.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/Login.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/ErrorInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/Magazyn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/Magazyn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/Order.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/Order.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/menu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +22,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -58,12 +55,17 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.service" />
       <recent name="org.example.model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -73,7 +75,7 @@
       <recent name="C:\Users\szort\IdeaProjects\GUI-Factorio\src\main\java\org\example\gui" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Order">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Magazyn" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.gui.Magazyn" />
       <module name="GUI-Factorio" />
@@ -113,10 +115,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="OrderForm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.gui.OrderForm" />
+      <module name="GUI-Factorio" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Order" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.OrderForm" />
+        <item itemvalue="Application.Order" />
         <item itemvalue="Application.Magazyn" />
       </list>
     </recent_temporary>
@@ -141,7 +157,22 @@
       <workItem from="1686474372367" duration="5701000" />
       <workItem from="1686598562597" duration="3163000" />
       <workItem from="1686763639783" duration="1745000" />
-      <workItem from="1686825320849" duration="3906000" />
+      <workItem from="1686825320849" duration="9594000" />
+      <workItem from="1686860815758" duration="1218000" />
+      <workItem from="1687009597410" duration="4896000" />
+      <workItem from="1687108369523" duration="4118000" />
+      <workItem from="1687195686729" duration="6844000" />
+      <workItem from="1687283332206" duration="3682000" />
+      <workItem from="1687339488285" duration="7822000" />
+      <workItem from="1687454082605" duration="2792000" />
+      <workItem from="1687542786249" duration="1041000" />
+      <workItem from="1687593964821" duration="4597000" />
+      <workItem from="1687633438666" duration="6493000" />
+      <workItem from="1687728720698" duration="624000" />
+      <workItem from="1687814979560" duration="3000" />
+      <workItem from="1687856696675" duration="2409000" />
+      <workItem from="1687977717483" duration="3556000" />
+      <workItem from="1688071385992" duration="904000" />
     </task>
     <servers />
   </component>

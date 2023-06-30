@@ -63,6 +63,12 @@ public class menu extends JDialog {
                 Magazyn.main(null);
             }
         });
+        zamowieniaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Order.main(null);
+            }
+        });
     }
 
     private void onOK() {

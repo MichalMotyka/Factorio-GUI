@@ -18,6 +18,8 @@ public class Magazyn extends JDialog {
     private JButton buttonCancel;
     private String[] columnNames = {"","ID","Nazwa","Ilość"};
     private ProductTabelController productTabelController;
+    private boolean chooseMode = false;
+    private OrderForm orderForm;
 
     public Magazyn() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -50,7 +52,12 @@ public class Magazyn extends JDialog {
             public void mouseClicked(MouseEvent e) {
                 if (lastClick+1000 > System.currentTimeMillis()){
                     long id = (long) table1.getValueAt(table1.getSelectedRow(),0);
-                    ProductForm productForm = new ProductForm(2,id);
+                    if (!chooseMode){
+                        ProductForm productForm = new ProductForm(2,id);
+                    }else {
+                        orderForm.addProduct(id);
+                    }
+
                 }
                 lastClick = System.currentTimeMillis();
             }
@@ -80,5 +87,12 @@ public class Magazyn extends JDialog {
         Magazyn dialog = new Magazyn();
         dialog.pack();
         dialog.setVisible(true);
+    }
+
+    public void chooseProduct(OrderForm orderForm) {
+        chooseMode = true;
+        this.orderForm = orderForm;
+        this.pack();
+        this.setVisible(true);
     }
 }

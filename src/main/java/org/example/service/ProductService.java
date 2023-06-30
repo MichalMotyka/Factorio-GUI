@@ -112,7 +112,7 @@ public class ProductService {
     public boolean editProduct(Product product) {
         Request request = new Request.Builder()
                 .url(propertiesReader.getValue("api.factorio.product.edit"))
-                .post(RequestBody.create(MediaType.parse("application/json"),gson.toJson(product)))
+                .put(RequestBody.create(MediaType.parse("application/json"),gson.toJson(product)))
                 .header("Authorization",userRepository.getToken())
                 .header("Refresh",userRepository.getToken())
                 .build();

@@ -1,10 +1,16 @@
 package org.example.gui;
 
+import org.example.model.Document;
+import org.example.model.DocumentType;
+import org.example.model.Status;
 import org.example.service.OrderService;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.*;
+import java.util.Arrays;
 
 public class Order extends JDialog {
     private JPanel contentPane;
@@ -13,14 +19,22 @@ public class Order extends JDialog {
     private JTextField textField1;
     private JTable table1;
     private JTable table2;
+    private JComboBox comboBox1;
     private JTable table3;
+    private JButton dodajButton;
+    private JButton edytujButton;
+    private JButton przesuńButton;
     private JButton buttonOK;
-    private OrderService orderService;
+    private OrderService orderService = new OrderService();
+    DefaultTableModel model;
 
     public Order() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        setTableModel();
 
         tabbedPane1.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -34,12 +48,127 @@ public class Order extends JDialog {
                 }
             }
         });
+        dodajButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OrderForm.main(null);
+            }
+        });
+
+        loadData();
+        comboBox1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTableValues();
+            }
+        });
+        tabbedPane1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                updateTableValues();
+            }
+        });
+        wyszukajButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateTableValues();
+            }
+        });
+        przesuńButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row1 = table1.getSelectedRow();
+                int row2 = table2.getSelectedRow();
+                int row3 = table3.getSelectedRow();
+                if (table1.isCellSelected(row1,0)){
+                    orderService.updateStatus((String) table1.getValueAt(row1,0));
+                } else if (table2.isCellSelected(row2,0)) {
+                    orderService.updateStatus((String) table2.getValueAt(row2,0));
+                }else if (table3.isCellSelected(row3,0)) {
+                    orderService.updateStatus((String) table3.getValueAt(row3,0));
+                }
+            }
+        });
+        table1.addMouseListener(new MouseAdapter() {
+            private long lastClick = 0;
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (lastClick+1000 > System.currentTimeMillis()){
+                    String id = (String) table1.getValueAt(table1.getSelectedRow(),0);
+                    OrderForm orderForm = new OrderForm();
+                    orderForm.openLoad(id);
+                }
+                lastClick = System.currentTimeMillis();
+            }
+        });
+        table2.addMouseListener(new MouseAdapter() {
+            private long lastClick = 0;
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (lastClick+1000 > System.currentTimeMillis()){
+                    String id = (String) table2.getValueAt(table2.getSelectedRow(),0);
+                    OrderForm orderForm = new OrderForm();
+                    orderForm.openLoad(id);
+                }
+                lastClick = System.currentTimeMillis();
+            }
+        });
     }
+
 
     public static void main(String[] args) {
         Order dialog = new Order();
         dialog.pack();
         dialog.setVisible(true);
-        System.exit(0);
+    }
+
+    private void loadData(){
+       Document[] documents = orderService.getDocuments(textField1.getText(),getStatus(comboBox1.getSelectedIndex()),getDocument(tabbedPane1.getSelectedIndex()),null);;
+       Arrays.stream(documents).toList().forEach(value-> model.addRow(new Object[]{value.getUid(),value.getStatus(),value.getCreateDate()}));
+    }
+
+    private Status getStatus(int value){
+        Status[] values = Status.values();
+        for (Status element : values) {
+            if (element.ordinal() == value) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    private DocumentType getDocument(int value){
+        DocumentType[] values = DocumentType.values();
+        for (DocumentType element : values) {
+            if (element.ordinal() == value) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+
+    private void setTableModel(){
+        model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Status");
+        model.addColumn("Data założenia");
+        table1.setDefaultEditor(Object.class, null);
+        table2.setDefaultEditor(Object.class, null);
+        table3.setDefaultEditor(Object.class, null);
+        table1.setModel(model);
+        table2.setModel(model);
+        table3.setModel(model);
+    }
+
+    private void updateTableValues(){
+        Document[] documents = orderService.getDocuments(textField1.getText(),getStatus(comboBox1.getSelectedIndex()),getDocument(tabbedPane1.getSelectedIndex()),null);
+        setTableModel();
+        if (documents != null){
+            Arrays.stream(documents).toList().forEach(value->{
+                model.addRow(new Object[]{value.getUid(),value.getStatus(),value.getCreateDate()});
+            });
+        }
     }
 }
+
