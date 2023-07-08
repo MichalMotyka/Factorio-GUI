@@ -124,7 +124,9 @@ public class Order extends JDialog {
 
     private void loadData(){
        Document[] documents = orderService.getDocuments(textField1.getText(),getStatus(comboBox1.getSelectedIndex()),getDocument(tabbedPane1.getSelectedIndex()),null);;
-       Arrays.stream(documents).toList().forEach(value-> model.addRow(new Object[]{value.getUid(),value.getStatus(),value.getCreateDate()}));
+       if(documents != null){
+           Arrays.stream(documents).toList().forEach(value-> model.addRow(new Object[]{value.getUid(),value.getStatus(),value.getCreateDate()}));
+       }
     }
 
     private Status getStatus(int value){

@@ -6,13 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="53e74e48-cd4b-4847-8427-e84e59344abe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/Magazyn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/Magazyn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/Order.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/Order.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/OrderForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/OrderForm.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/OrderForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/OrderForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/ProductForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/ProductForm.form" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,11 +170,28 @@
       <workItem from="1687856696675" duration="2409000" />
       <workItem from="1687977717483" duration="3556000" />
       <workItem from="1688071385992" duration="904000" />
+      <workItem from="1688156522531" duration="502000" />
+      <workItem from="1688157041047" duration="608000" />
+      <workItem from="1688193162427" duration="711000" />
+      <workItem from="1688231564757" duration="3538000" />
+      <workItem from="1688728641909" duration="3496000" />
+      <workItem from="1688801646971" duration="1387000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

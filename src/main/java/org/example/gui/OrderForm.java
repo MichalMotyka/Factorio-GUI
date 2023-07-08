@@ -41,6 +41,8 @@ public class OrderForm extends JDialog {
     private JButton anulujButton;
     private JButton zatwierdźButton;
     private JButton dodajProduktButton;
+    private JCheckBox opłataPobraniowaCheckBox;
+    private JComboBox comboBox2;
     private JButton buttonOK;
     DefaultTableModel model;
     ProductService productService = new ProductService();
@@ -147,14 +149,15 @@ public class OrderForm extends JDialog {
     }
 
     private void changeType(){
-        if (comboBox1.getSelectedItem().equals("ZAM")){
+        System.out.println(getSize());
+        if (comboBox1.getSelectedItem().equals("ZAM") && !zamfield.isVisible()){
             zamfield.setVisible(true);
-            contentPane.setSize(490,355);
-            setBounds(10,10,503,530);
-        }else {
+            contentPane.setSize(490,455);
+            setBounds(10,10,503,630);
+        }else if (zamfield.isVisible() && !comboBox1.getSelectedItem().equals("ZAM")){
             zamfield.setVisible(false);
             contentPane.setSize(490,400);
-            setBounds(10,10,503,335);
+            setBounds(10,10,503,355);
         }
     }
 
