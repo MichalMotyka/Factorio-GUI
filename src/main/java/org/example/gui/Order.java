@@ -33,7 +33,8 @@ public class Order extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
+        przesuńButton.setEnabled(false);
+        edytujButton.setEnabled(false);
         setTableModel();
 
         tabbedPane1.addChangeListener(new ChangeListener() {
@@ -89,14 +90,38 @@ public class Order extends JDialog {
                 }
             }
         });
+        edytujButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row1 = table1.getSelectedRow();
+                int row2 = table2.getSelectedRow();
+                int row3 = table3.getSelectedRow();
+
+                if (table1.isCellSelected(row1,0)){
+                    String id = (String) table1.getValueAt(table1.getSelectedRow(),0);
+                    OrderForm orderForm = new OrderForm();
+                    orderForm.openLoad(id,true);
+                } else if (table2.isCellSelected(row2,0)) {
+                    String id = (String) table2.getValueAt(table2.getSelectedRow(),0);
+                    OrderForm orderForm = new OrderForm();
+                    orderForm.openLoad(id,true);
+                }else if (table3.isCellSelected(row3,0)) {
+                    String id = (String) table3.getValueAt(table3.getSelectedRow(),0);
+                    OrderForm orderForm = new OrderForm();
+                    orderForm.openLoad(id,true);
+                }
+            }
+        });
         table1.addMouseListener(new MouseAdapter() {
             private long lastClick = 0;
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (lastClick+1000 > System.currentTimeMillis()){
+                przesuńButton.setEnabled(table1.isRowSelected(table1.getSelectedRow()));
+                edytujButton.setEnabled(table1.isRowSelected(table1.getSelectedRow()) && comboBox1.getSelectedIndex() != 3);
+                if (lastClick+500 > System.currentTimeMillis()){
                     String id = (String) table1.getValueAt(table1.getSelectedRow(),0);
                     OrderForm orderForm = new OrderForm();
-                    orderForm.openLoad(id);
+                    orderForm.openLoad(id,false);
                 }
                 lastClick = System.currentTimeMillis();
             }
@@ -105,12 +130,35 @@ public class Order extends JDialog {
             private long lastClick = 0;
             @Override
             public void mousePressed(MouseEvent e) {
-                if (lastClick+1000 > System.currentTimeMillis()){
+                przesuńButton.setEnabled(table2.isRowSelected(table2.getSelectedRow()));
+                edytujButton.setEnabled(table2.isRowSelected(table2.getSelectedRow()) && comboBox1.getSelectedIndex() != 3);
+                if (lastClick+500 > System.currentTimeMillis()){
                     String id = (String) table2.getValueAt(table2.getSelectedRow(),0);
                     OrderForm orderForm = new OrderForm();
-                    orderForm.openLoad(id);
+                    orderForm.openLoad(id,false);
                 }
                 lastClick = System.currentTimeMillis();
+            }
+        });
+        table3.addMouseListener(new MouseAdapter() {
+            private long lastClick = 0;
+            @Override
+            public void mousePressed(MouseEvent e) {
+                przesuńButton.setEnabled(table3.isRowSelected(table3.getSelectedRow()));
+                edytujButton.setEnabled(table3.isRowSelected(table3.getSelectedRow()) && comboBox1.getSelectedIndex() != 3);
+                if (lastClick + 500 > System.currentTimeMillis()){
+                    String id = (String) table3.getValueAt(table3.getSelectedRow(),0);
+                    OrderForm orderForm = new OrderForm();
+                    orderForm.openLoad(id,false);
+                }
+                lastClick = System.currentTimeMillis();
+            }
+        });
+        tabbedPane1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                przesuńButton.setEnabled(false);
+                edytujButton.setEnabled(false);
             }
         });
     }

@@ -1,9 +1,7 @@
 package org.example.gui;
 
-import org.example.model.Document;
-import org.example.model.DocumentType;
-import org.example.model.Product;
-import org.example.model.Status;
+import org.example.model.*;
+import org.example.model.Order;
 import org.example.service.OrderService;
 import org.example.service.ProductService;
 
@@ -18,6 +16,9 @@ import java.util.List;
 
 public class OrderForm extends JDialog {
     private JPanel contentPane;
+    private Document document;
+    private boolean editMode = false;
+    private boolean createMode = true;
     private JComboBox comboBox1;
     private JTextField textField1;
     private JTextField textField2;
@@ -43,6 +44,7 @@ public class OrderForm extends JDialog {
     private JButton dodajProduktButton;
     private JCheckBox opłataPobraniowaCheckBox;
     private JComboBox comboBox2;
+    private JCheckBox czyFakturowaćCheckBox;
     private JButton buttonOK;
     DefaultTableModel model;
     ProductService productService = new ProductService();
@@ -78,31 +80,74 @@ public class OrderForm extends JDialog {
         table1.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int row = table1.getSelectedRow();
-                String name = table1.getValueAt(row,0).toString();
-                int quantity = Integer.parseInt(table1.getValueAt(row,1).toString());
-                removeProduct(name,quantity,row);
+                if (editMode || createMode){
+                    int row = table1.getSelectedRow();
+                    String name = table1.getValueAt(row,0).toString();
+                    int quantity = Integer.parseInt(table1.getValueAt(row,1).toString());
+                    removeProduct(name,quantity,row);
+                }
             }
         });
         zatwierdźButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Document response = orderService.createDocument(
-                        new Document(
-                            0,
+                if (productList.size() == 0){
+                    JOptionPane.showMessageDialog(null,"Nie można utworzyć zamówienia z pustą wartościa");
+                    return;
+                }
+                Order order = null;
+                if (comboBox1.getSelectedItem().equals("ZAM")){
+                    order = new Order(0,
+                            textField6.getText(),
+                            textField7.getText(),
+                            textField9.getText(),
+                            textField8.getText(),
+                            textField10.getText(),
+                            textField11.getText(),
+                            textField12.getText(),
+                            textField13.getText(),
+                            textField14.getText(),
+                            textField15.getText(),
+                            textArea1.getText(),
+                            Deliver.valueOf(comboBox2.getSelectedItem().toString().toUpperCase()),
+                            opłataPobraniowaCheckBox.isSelected(),
+                            czyFakturowaćCheckBox.isSelected());
+                }
+                Document response = null;
+                if (editMode){
+                    response = orderService.updateDocument( new Document(
+                            document.getId(),
                             DocumentType.valueOf(comboBox1.getSelectedItem().toString()),
                             Status.NEW,
-                            null,
-                            null,
-                            null,
-                            null,
+                            document.getUid(),
+                            document.getCreateDate(),
+                            document.getEndDate(),
+                            document.getAuthor(),
                             textArea2.getText(),
-                            productList
+                            productList,
+                            order,
+                            document.getRelatedDocument()
+                    ));
+                }
+                response = orderService.createDocument(
+                        new Document(
+                                0,
+                                DocumentType.valueOf(comboBox1.getSelectedItem().toString()),
+                                Status.NEW,
+                                null,
+                                null,
+                                null,
+                                null,
+                                textArea2.getText(),
+                                productList,
+                                order,
+                                null
                         )
                 );
                 if (response != null){
                     dispose();
-                    JOptionPane.showMessageDialog(null,"Pomyślnie utworzono dokument od numerze "+response.getUid());
+                    String message = editMode? "Pomyślnie zmodyfikowano dokument od numerze " :"Pomyślnie utworzono dokument od numerze ";
+                    JOptionPane.showMessageDialog(null,message+response.getUid());
                 }
             }
         });
@@ -121,43 +166,77 @@ public class OrderForm extends JDialog {
         dialog.setVisible(true);
     }
 
-    public void openLoad(String id){
+    public void openLoad(String id,boolean editMode){
         documentNumber = id;
-        loadData();
+        loadData(editMode);
         this.pack();
         this.setVisible(true);
     }
 
-    private void loadData(){
+    private void loadData(boolean editMode){
+        createMode = false;
         Document document = orderService.getExtendedDocument(documentNumber);
-        comboBox1.setSelectedItem(document.getDocumentType());
+        comboBox1.setSelectedItem(document.getDocumentType().toString());
         textField1.setText(document.getUid());
         textField2.setText(document.getCreateDate());
         textField4.setText(document.getEndDate());
         textField3.setText(document.getStatus().name());
         textField5.setText(document.getAuthor().getName());
         textArea2.setText(document.getDescription());
+        productList.addAll(document.getProductList());
         document.getProductList().forEach(value->{
             model.addRow(new Object[]{value.getName(),value.getQuantity()});
         });
-        if (documentNumber != null){
+        changeType();
+        if (document.getDocumentType() == DocumentType.ZAM){
+            textField6.setText(document.getOrder().getName());
+            textField7.setText(document.getOrder().getSurname());
+            textField9.setText(document.getOrder().getCompany());
+            textField8.setText(document.getOrder().getPesel());
+            textField10.setText(document.getOrder().getNip());
+            textField11.setText(document.getOrder().getAdress());
+            textField12.setText(document.getOrder().getCity());
+            textField13.setText(document.getOrder().getPostCode());
+            textField15.setText(document.getOrder().getPhone());
+            textField14.setText(document.getOrder().getMail());
+            textArea1.setText(document.getOrder().getDescription());
+            comboBox2.setSelectedItem(document.getOrder().getDeliver().value);
+            czyFakturowaćCheckBox.setSelected(document.getOrder().isFacture());
+            opłataPobraniowaCheckBox.setSelected(document.getOrder().isCOD());
+        }
+        this.editMode = editMode;
+        this.document = document;
+        if (!editMode){
             comboBox1.setEnabled(false);
             textArea2.setEditable(false);
             dodajProduktButton.setEnabled(false);
             zatwierdźButton.setVisible(false);
+            textField6.setEditable(false);
+            textField7.setEditable(false);
+            textField9.setEditable(false);
+            textField8.setEditable(false);
+            textField10.setEditable(false);
+            textField11.setEditable(false);
+            textField12.setEditable(false);
+            textField13.setEditable(false);
+            textField15.setEditable(false);
+            textField14.setEditable(false);
+            textArea1.setEditable(false);
+            comboBox2.setEnabled(false);
+            czyFakturowaćCheckBox.setEnabled(false);
+            opłataPobraniowaCheckBox.setEnabled(false);
         }
     }
 
     private void changeType(){
-        System.out.println(getSize());
         if (comboBox1.getSelectedItem().equals("ZAM") && !zamfield.isVisible()){
             zamfield.setVisible(true);
             contentPane.setSize(490,455);
-            setBounds(10,10,503,630);
+            setBounds(10,10,533,630);
         }else if (zamfield.isVisible() && !comboBox1.getSelectedItem().equals("ZAM")){
             zamfield.setVisible(false);
             contentPane.setSize(490,400);
-            setBounds(10,10,503,355);
+            setBounds(10,10,513,355);
         }
     }
 

@@ -13,8 +13,10 @@ public class Document {
     private Author author;
     private String description;
     private List<Product> productList;
+    private Order order;
+    private Document relatedDocument;
 
-    public Document(long id, DocumentType documentType, Status status, String uid, String createDate, String endDate, Author author, String description, List<Product> productList) {
+    public Document(long id, DocumentType documentType, Status status, String uid, String createDate, String endDate, Author author, String description, List<Product> productList,Order order, Document relatedDocument) {
         this.id = id;
         this.documentType = documentType;
         this.status = status;
@@ -24,6 +26,8 @@ public class Document {
         this.author = author;
         this.description = description;
         this.productList = productList;
+        this.order = order;
+        this.relatedDocument = relatedDocument;
     }
 
     public long getId() {
@@ -96,4 +100,21 @@ public class Document {
     public void setProductList(List<Product> productList) {
         this.productList = productList;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Document getRelatedDocument() {
+        return relatedDocument;
+    }
+
+    public void setRelatedDocument(Document relatedDocument) {
+        this.relatedDocument = relatedDocument;
+    }
+
 }

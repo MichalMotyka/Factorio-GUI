@@ -39,7 +39,7 @@ public class ProductForm extends JDialog {
     private String imageMainName;
     private final ProductService productService = new ProductService();
 
-    public ProductForm(int mode, long id) {
+    public ProductForm(int mode, long id,Magazyn magazyn) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -151,6 +151,7 @@ public class ProductForm extends JDialog {
                                 null,
                                 Objects.requireNonNull(category.getSelectedItem()).toString());
                         if(productService.editProduct(product)){
+                            magazyn.getProductTabelController().loadData();
                             dispose();
                         }
                 }

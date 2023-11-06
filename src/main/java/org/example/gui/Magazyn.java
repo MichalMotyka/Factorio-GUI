@@ -20,8 +20,10 @@ public class Magazyn extends JDialog {
     private ProductTabelController productTabelController;
     private boolean chooseMode = false;
     private OrderForm orderForm;
+    private final Magazyn magazyn;
 
     public Magazyn() {
+        magazyn = this;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(contentPane);
         setModal(true);
@@ -42,7 +44,7 @@ public class Magazyn extends JDialog {
         dodajButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ProductForm productForm = new ProductForm(0,0);
+                ProductForm productForm = new ProductForm(0,0,magazyn);
             }
         });
         table1.addMouseListener(new MouseAdapter() {
@@ -53,7 +55,7 @@ public class Magazyn extends JDialog {
                 if (lastClick+1000 > System.currentTimeMillis()){
                     long id = (long) table1.getValueAt(table1.getSelectedRow(),0);
                     if (!chooseMode){
-                        ProductForm productForm = new ProductForm(2,id);
+                        ProductForm productForm = new ProductForm(2,id,magazyn);
                     }else {
                         orderForm.addProduct(id);
                     }
@@ -66,10 +68,22 @@ public class Magazyn extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 long id = (long) table1.getValueAt(table1.getSelectedRow(),0);
-                ProductForm productForm = new ProductForm(1,id);
+                ProductForm productForm = new ProductForm(1,id,magazyn);
             }
         });
         wyszukajButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean active = null;
+                if (comboBox1.getSelectedItem().equals("Nie")){
+                    active = false;
+                }else if(comboBox1.getSelectedItem().equals("Tak")){
+                    active = true;
+                }
+                productTabelController.searchdata(textField1.getText(),active);
+            }
+        });
+        comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Boolean active = null;
@@ -90,9 +104,15 @@ public class Magazyn extends JDialog {
     }
 
     public void chooseProduct(OrderForm orderForm) {
+        comboBox1.setSelectedItem("Tak");
+        comboBox1.setEnabled(false);
         chooseMode = true;
         this.orderForm = orderForm;
         this.pack();
         this.setVisible(true);
+    }
+
+    public ProductTabelController getProductTabelController(){
+        return productTabelController;
     }
 }

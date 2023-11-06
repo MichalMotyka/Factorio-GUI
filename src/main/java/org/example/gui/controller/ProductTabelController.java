@@ -23,6 +23,7 @@ public class ProductTabelController {
 
     public void loadData(){
         ProductRow[] products = productService.getAllProducts();
+        this.defaultTableModel.setRowCount(0);
         for (ProductRow product : products){
             this.defaultTableModel.addRow(new Object[]{product.getId(),product.getName(),product.getQuantity()});
         }

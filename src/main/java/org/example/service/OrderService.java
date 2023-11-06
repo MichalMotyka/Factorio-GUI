@@ -115,6 +115,29 @@ public class OrderService {
         }
     }
 
+    public Document updateDocument(Document document) {
+        Request request = new Request.Builder()
+                .url(propertiesReader.getValue("api.factorio.document.update"))
+                .put(RequestBody.create(MediaType.parse("application/json"), gson.toJson(document)))
+                .header("Authorization", userRepository.getToken())
+                .header("Refresh", userRepository.getToken())
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                return gson.fromJson(Objects.requireNonNull(response.body()).string(), Document.class);
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "Nie udało się zaaktualizować dokumentu. Wystąpił błąd: " + response.code());
+                System.out.println("Wystąpił błąd: " + response.code());
+                return null;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Nie udało się nawiązać połączenia z serwerem");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean updateStatus(String id) {
         String uri;
         try {
